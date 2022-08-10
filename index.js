@@ -7,6 +7,7 @@ const express = require('express')
   , mvController = require('./lib/controllers/mvController')
   , auditController = require('./lib/controllers/auditController')
   , trapsController = require('./lib/controllers/trapsController')
+  , mailController = require('./lib/controllers/mailController')
 
 // Setup server port
 const port = process.env.PORT || 4000;
@@ -24,8 +25,14 @@ const app = express()
   .get('/audits', auditController.getAllAudits)
   .post('/audits', auditController.createAudit)
   .get('/audits/:id', auditController.getAudit)
+  .get('/versions/:id', auditController.getVersionsByAudit)
 
   .get('/traps', trapsController.getActiveTraps)
+
+  .get('/users', auditController.getUsers)
+  .post('/users', auditController.createUser)
+
+  .post('/review/send', mailController.sendReviewMail)
 
 // start server
 app.listen(port, () => {
