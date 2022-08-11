@@ -8,6 +8,7 @@ const express = require('express')
   , auditController = require('./lib/controllers/auditController')
   , trapsController = require('./lib/controllers/trapsController')
   , mailController = require('./lib/controllers/mailController')
+  , commentsController = require('./lib/controllers/commentsController')
 
 // Setup server port
 const port = process.env.PORT || 4000;
@@ -33,6 +34,12 @@ const app = express()
   .post('/users', auditController.createUser)
 
   .post('/review/send', mailController.sendReviewMail)
+
+  .post('/comments', commentsController.createComment)
+  .get('/comments', commentsController.getCommentByAudit)
+
+  .post('/trap/images', auditController.setTrapImages)
+  .get('/trap/images', auditController.getTrapImages)
 
 // start server
 app.listen(port, () => {
